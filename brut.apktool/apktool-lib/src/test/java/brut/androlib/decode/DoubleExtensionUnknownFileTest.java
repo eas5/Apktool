@@ -26,6 +26,7 @@ import brut.common.BrutException;
 import brut.util.OS;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.AfterClass;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -54,9 +55,11 @@ public class DoubleExtensionUnknownFileTest extends BaseTest {
     @Test
     public void multipleExtensionUnknownFileTest() throws BrutException, IOException {
         String apk = "issue1244.apk";
+        File apkFile = new File(sTmpDir + File.separator + apk);
+        Assume.assumeTrue(apkFile.length()>0);
 
         // decode issue1244.apk
-        ApkDecoder apkDecoder = new ApkDecoder(new File(sTmpDir + File.separator + apk));
+        ApkDecoder apkDecoder = new ApkDecoder(apkFile);
         ExtFile decodedApk = new ExtFile(sTmpDir + File.separator + apk + ".out");
         apkDecoder.setOutDir(new File(sTmpDir + File.separator + apk + ".out"));
         apkDecoder.decode();
